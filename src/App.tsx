@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from "./App.module.scss";
 import { CanvasDrawner } from './CanvasDrawner';
 
@@ -8,6 +8,7 @@ function App() {
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
   const [, render] = useState(false);
+  useEffect(() => render(prev => !prev), []);
   if (canvasRef.current){
     try{
       new CanvasDrawner(canvasRef.current).drawMechanism(x, y);
@@ -39,7 +40,7 @@ function App() {
   return (
     <>
       <div className={styles.container}>
-        <canvas className={styles.graph} width={1000} height={1000} ref={canvasRef} onClick={() => render(prev => !prev)}>
+        <canvas className={styles.graph} width={1000} height={1000} ref={canvasRef}>
         </canvas>
         <input type='range' onChange={handleXChange} min={0} max={1000} value={x}/>
         <input type='range' onChange={handleYChange} min={0} max={1000} value={y}/>
